@@ -6,6 +6,7 @@
 using StorePackage;
 using System.Collections.Generic;
 
+
 namespace UserPackage {
 
 /// <summary>
@@ -16,18 +17,23 @@ namespace UserPackage {
      /// </summary>
 public class StoreOwner : User
 {
-    // Attributes
-
-    public List<Store> stores = new List<Store>();
-        
        
+
+        // Attributes
+
+        public List<Store> stores = new List<Store>();
+
+        public StoreOwner()
+        {
+        }
+
         public StoreOwner(string email, string userName, string password) : base(email,userName,password)
         {
           //  stores = new List<Store>();
         }
         public void addStore(Store store)
         {
-            stores.Add(store);
+
         }
     } /* end class StoreOwner */
 

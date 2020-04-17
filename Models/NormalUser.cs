@@ -13,6 +13,9 @@ namespace UserPackage {
     /// </summary>
     public class NormalUser : User
     {
+        public NormalUser() : base()
+        {
+        }
         public NormalUser(string email, string userName, string password) : base(email, userName, password)
         {
         }
