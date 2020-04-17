@@ -14,11 +14,9 @@ namespace UserPackage
     /// 
     ///  @see OtherClasses
     ///  @author your_name_here
-    /// </summary>
-    public class RegisterController : ApiController, IRegister
-    {
-
-
+public class RegisterController: ApiController, IRegister
+{
+      
         IUserFinder userFinder = new RegisteredUsersController();
 
         IAddUserRepo normalUserRepo = new NormalUserDataBase();
@@ -36,8 +34,6 @@ namespace UserPackage
             UserController user = userFinder.findUser(email);
             if (user != null)
                 return null;
-
-
 
             NormalUserController normalUser = new NormalUserController(email, userName, password);
             normalUserRepo.addUser(normalUser.getNormalUser());
@@ -76,7 +72,11 @@ namespace UserPackage
             StoreOwnerController storeOwnerUser = new StoreOwnerController(email, userName, password);
             OnSiteStore onSiteStore = new OnSiteStore(storeName, storeAddress, storeOwnerUser.getStoreOwner());
             onsiteStoreAdder.addStore(onSiteStore);
+
             storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());
+
+            storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());          
+
             return storeOwnerUser;
         }
 

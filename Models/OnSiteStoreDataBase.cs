@@ -1,87 +1,49 @@
-// FILE: D:/New Folder (22)/StorePackage/OnSiteStoreDataBase.cs
+using System.Data.SqlClient;
+using UserPackage;
 
-// In this section you can add your own using directives
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AAC begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AAC end
-namespace StorePackage {
-
-/// <summary>
-    ///  A class that represents ...
-    /// 
-    ///  @see OtherClasses
-    ///  @author your_name_here
-     /// </summary>
-public class OnSiteStoreDataBase: IAddStoreRepo, IDeleteStoreRepo, ISearchStoreRepo, IUpdateStoreRepo
+namespace StorePackage
 {
-    // Operations
 
-    public /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="OnSiteStore">
-    /// </param>
-    /// <returns>
-    /// </returns>
-     void addStore(Store a)
+    public class OnSiteStoreDataBase : IAddStoreRepo, IDeleteStoreRepo, ISearchStoreRepo, IUpdateStoreRepo
     {
-          //  return false;
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B10 begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B10 end
+        static private SqlConnection conn = new SqlConnection("Data Source=sql5053.site4now.net;Initial Catalog=DB_A5A92A_SWEDB;Persist Security Info=True;User ID=DB_A5A92A_SWEDB_admin;Password=aaas2020");
+        // Operations
 
-    }
+        public void addStore(Store store)
+        {
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "insert into OnSiteStore  values('" + store.getStoreName() + "','" + store.getStoreAddress() + "','" + store.getStoreOwner().email + "')";
+            cmd.ExecuteNonQuery();
+            conn.Close();
 
-    /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="String">
-    /// </param>
-    /// <returns>
-    /// </returns>
-    public Store searchStoreByName( string a)
-    {
+        }
+        public Store searchStoreByName(string name)
+        {
+            conn.Open();
+            string strSelect = "Select * From OnlineStore where storeName=@name";
+            SqlCommand cmd = new SqlCommand(strSelect, conn);
+            cmd.Parameters.Add("@name", name);
+            SqlDataReader myReader = cmd.ExecuteReader();
+            if (myReader.Read())
+            {
+                string storename = myReader["storeName"].ToString();
+                string storeaddress = myReader["storeAddress"].ToString();
+                string storeowner = myReader["storeOwner"].ToString();
+                StoreOwnerDataBase sodb = new StoreOwnerDataBase();
+                StoreOwnerController storeOwner = (StoreOwnerController)sodb.searchByEmail(storeowner);
+                Store store = new Store(storename, storeaddress, (StoreOwner)storeOwner.getModel());
+                conn.Close();
+                return store;
+            }
+            conn.Close();
             return null;
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B13 begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B13 end
 
+        }
+
+        public void updateStore(Store a) { }
+        public void deleteStoreByName(string a) { }
     }
-
-    public /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="OnSiteStore">
-    /// </param>
-    /// <returns>
-    /// </returns>
-     void updateStore(Store a)
-    {
-           // return false;
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B16 begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B16 end
-
-    }
-
-    public /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="String">
-    /// </param>
-    /// <returns>
-    /// </returns>
-     void deleteStoreByName( string a)
-    {
-          //  return false;
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B19 begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000B19 end
-
-    }
-} /* end class OnSiteStoreDataBase */
 
 }
