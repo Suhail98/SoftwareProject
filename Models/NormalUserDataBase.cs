@@ -1,104 +1,88 @@
-// FILE: D:/New Folder (22)/UserPackage/NormalUserDataBase.cs
-
-// In this section you can add your own using directives
-// section -87--2-87--42--4267bcd9:1710d3b46a2:-8000:0000000000000975 begin
-// section -87--2-87--42--4267bcd9:1710d3b46a2:-8000:0000000000000975 end
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Web.Http;
 
 namespace UserPackage {
 
-/// <summary>
-    ///  A class that represents ...
-    /// 
-    ///  @see OtherClasses
-    ///  @author your_name_here
-     /// </summary>
+
 public class NormalUserDataBase : ApiController,IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo, IListUserRepo, ISearchUserRepo
     {
-       static private List<NormalUser> normalUsers = new List<NormalUser>
+        static private SqlConnection conn = new SqlConnection("Data Source=sql5053.site4now.net;Initial Catalog=DB_A5A92A_SWEDB;Persist Security Info=True;User ID=DB_A5A92A_SWEDB_admin;Password=aaas2020");
+
+
+        public void addUser(User user)
         {
-            new NormalUser("abdo@gmail.com","abdo","123"),
-        };
-
-        public /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="NormalUser">
-    /// </param>
-    /// <returns>
-    /// </returns>
-     void addUser(User user)
-        {
-
-            normalUsers.Add((NormalUser)user);
-    }
-
-    public /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="String">
-    /// </param>
-    /// <returns>
-    /// </returns>
-      UserController searchByEmail( string email)
-    {
-           foreach(User user in normalUsers)
-            {
-                
-                if (user.getEmail().Equals(email))
-                    return new NormalUserController((NormalUser)user);
-            }
-            return null;
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AED begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AED end
-
-    }
-
-      
-
-        public /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="NormalUser">
-    /// </param>
-    /// <returns>
-    /// </returns>
-     void updateUser(User user)
-    {
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AF0 begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AF0 end
-
-    }
-
-    public /// <summary>
-    ///  An operation that does...
-    /// 
-    ///  @param firstParam a description of this parameter
-    /// </summary>
-    /// <param name="String">
-    /// </param>
-    /// <returns>
-    /// </returns>
-      void deleteUserByEmail( string a)
-    {
-        
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AF3 begin
-    // section -87--2-87--42--46e34135:1711ce644e4:-8000:0000000000000AF3 end
-
-    }
-        public List<User> listUsers()
-        {
-            return new List<User>(normalUsers);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "insert into NormalUser values('" + user.email + "','" + user.userName + "','" + user.password + "')";
+            cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
-    } /* end class NormalUserDataBase */
+    public UserController searchByEmail( string email)
+    {
+            conn.Open();
+            string strSelect = "Select * From NormalUser where email=@email";
+            SqlCommand cmd = new SqlCommand(strSelect, conn);
+            cmd.Parameters.Add("@email", email);
+            SqlDataReader myReader = cmd.ExecuteReader();
+            if (myReader.Read())
+            {
+                string Nemail = myReader["email"].ToString();
+                string userName = myReader["userName"].ToString();
+                string password = myReader["password"].ToString();
+                NormalUserController normaluser = new NormalUserController(Nemail, userName, password);
+                conn.Close();
+                return normaluser;
+            }
+            conn.Close();
+            return null;
+        }
+
+        public void updateUser(User user)
+         {
+            conn.Open();
+            string sql = "update NormalUser set email= @user.email , userName = @user.userName , password = @user.password where email=@user.email";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.Add("@user.email", user.email);
+            cmd.Parameters.Add("@user.userName", user.userName);
+            cmd.Parameters.Add("@user.password", user.password);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+         }
+
+        public  void deleteUserByEmail(string email)
+        {
+            conn.Open();
+            string sql = "delete from NormalUser where email=@email";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.Add("@email",email);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+        }
+        public List<User> listUsers()
+        {
+            List<NormalUser> normalUsers = new List<NormalUser> ();
+            conn.Open();
+            string strSelect = "Select * From NormalUser ";
+            SqlCommand cmd = new SqlCommand(strSelect, conn);
+            SqlDataReader myReader = cmd.ExecuteReader();
+            while (myReader.Read())
+            {
+                NormalUser normalUser = new NormalUser();
+                normalUser.email = myReader["email"].ToString();
+                normalUser.userName = myReader["userName"].ToString();
+                normalUser.password = myReader["password"].ToString();
+                normalUsers.Add(normalUser); 
+            }
+            myReader.Close();
+            conn.Close();
+            return new List<User>(normalUsers);
+        }
+    } 
 
 }
