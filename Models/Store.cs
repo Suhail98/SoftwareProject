@@ -28,6 +28,31 @@ public class Store
             this.storeAddress = storeAddress;
            this.storeOwner = storeOwner;
         }
+        public string getStoreName()
+        {
+            return storeName;
+        }
+        public string getStoreAddress()
+        {
+            return storeAddress;
+        }
+        public StoreOwner getStoreOwner()
+        {
+            return storeOwner;
+        }
+        public void setStoreName(string storeName)
+        {
+            this.storeName = storeName;
+        }
+        public void setStoreAddress(string storeAddress)
+        {
+            this.storeAddress = storeAddress;
+        }
+        public void setStoreOwner(StoreOwner storeOwner)
+        {
+            this.storeOwner = storeOwner;
+        }
+
     } /* end class Store */
 
 }
