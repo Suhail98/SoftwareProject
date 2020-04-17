@@ -16,6 +16,8 @@ namespace UserPackage {
      /// </summary>
 public class RegisterController: ApiController, IRegister
 {
+      
+  
         IUserFinder userFinder = new RegisteredUsersController();
 
         IAddUserRepo normalUserRepo = new NormalUserDataBase();
@@ -33,6 +35,8 @@ public class RegisterController: ApiController, IRegister
             UserController user = userFinder.findUser(email);
             if (user != null)
                 return null;
+
+ 
 
             NormalUserController normalUser = new NormalUserController(email, userName, password);
             normalUserRepo.addUser(normalUser.getNormalUser());
@@ -53,9 +57,6 @@ public class RegisterController: ApiController, IRegister
             StoreOwnerController storeOwnerUser = new StoreOwnerController(email, userName, password);
             OnlineStore onlineStore = new OnlineStore(storeName, storeURL,storeOwnerUser.getStoreOwner());
             onlineStoreAdder.addStore(onlineStore);
-
-            storeOwnerUser.addStore(onlineStore);
-
             storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());
             return storeOwnerUser;
         }
@@ -74,7 +75,6 @@ public class RegisterController: ApiController, IRegister
             StoreOwnerController storeOwnerUser = new StoreOwnerController(email, userName, password);
             OnSiteStore onSiteStore = new OnSiteStore(storeName, storeAddress, storeOwnerUser.getStoreOwner());
             onsiteStoreAdder.addStore(onSiteStore);
-            storeOwnerUser.addStore(onSiteStore);
             storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());          
             return storeOwnerUser;
         }
