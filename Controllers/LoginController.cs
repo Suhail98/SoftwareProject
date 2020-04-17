@@ -10,11 +10,6 @@ using UserPackage;
 namespace WebApplication3.Controllers
 {
 
-    /// <summary>
-    ///  A class that represents ...
-    /// 
-    ///  @see OtherClasses
-    ///  @author your_name_here
     /// </summary>
     public class LoginController : ApiController, ILogin
     {
@@ -32,8 +27,6 @@ namespace WebApplication3.Controllers
 
             return user.getModel();
         }
-
-       
-    } /* end class Login */
+    }
 
 }

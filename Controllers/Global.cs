@@ -17,5 +17,9 @@ namespace UserPackage
         {
             currentUser = null;
         }
+        public static UserController getCurrentSession()
+        {
+            return currentUser;
+        }
     }
 }
