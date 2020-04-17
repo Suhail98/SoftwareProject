@@ -6,18 +6,17 @@
 using StorePackage;
 using System.Web.Http;
 
-namespace UserPackage {
+namespace UserPackage
+{
 
-/// <summary>
+    /// <summary>
     ///  A class that represents ...
     /// 
     ///  @see OtherClasses
     ///  @author your_name_here
-     /// </summary>
 public class RegisterController: ApiController, IRegister
 {
       
-  
         IUserFinder userFinder = new RegisteredUsersController();
 
         IAddUserRepo normalUserRepo = new NormalUserDataBase();
@@ -36,15 +35,13 @@ public class RegisterController: ApiController, IRegister
             if (user != null)
                 return null;
 
- 
-
             NormalUserController normalUser = new NormalUserController(email, userName, password);
             normalUserRepo.addUser(normalUser.getNormalUser());
             return normalUser;
         }
 
         [HttpPost]
-        public StoreOwnerController registerStoreOwnerForOnlineStore(string email,string userName,string password, string storeName, string storeURL, [FromBody]string value)
+        public StoreOwnerController registerStoreOwnerForOnlineStore(string email, string userName, string password, string storeName, string storeURL, [FromBody]string value)
         {
             UserController user = userFinder.findUser(email);
             if (user != null)
@@ -53,9 +50,9 @@ public class RegisterController: ApiController, IRegister
             Store store = onlineStoreSearcher.searchStoreByName(storeName);
             if (store != null)
                 return null;
-      
+
             StoreOwnerController storeOwnerUser = new StoreOwnerController(email, userName, password);
-            OnlineStore onlineStore = new OnlineStore(storeName, storeURL,storeOwnerUser.getStoreOwner());
+            OnlineStore onlineStore = new OnlineStore(storeName, storeURL, storeOwnerUser.getStoreOwner());
             onlineStoreAdder.addStore(onlineStore);
             storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());
             return storeOwnerUser;
@@ -75,7 +72,11 @@ public class RegisterController: ApiController, IRegister
             StoreOwnerController storeOwnerUser = new StoreOwnerController(email, userName, password);
             OnSiteStore onSiteStore = new OnSiteStore(storeName, storeAddress, storeOwnerUser.getStoreOwner());
             onsiteStoreAdder.addStore(onSiteStore);
+
+            storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());
+
             storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());          
+
             return storeOwnerUser;
         }
 

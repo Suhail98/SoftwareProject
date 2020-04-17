@@ -6,19 +6,20 @@
 using StorePackage;
 using System;
 
-namespace UserPackage {
+namespace UserPackage
+{
 
-/// <summary>
+    /// <summary>
     ///  A class that represents ...
     /// 
     ///  @see OtherClasses
     ///  @author your_name_here
-     /// </summary>
-public class StoreOwnerController : UserController
-{
-    // Attributes
+    /// </summary>
+    public class StoreOwnerController : UserController
+    {
+        // Attributes
 
-    private StoreOwner storeOwner;
+        private StoreOwner storeOwner;
 
 
         public StoreOwnerController(StoreOwner storeOwner)
