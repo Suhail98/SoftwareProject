@@ -22,7 +22,7 @@ public class User
     public string password;
 
     private bool isLogged = false;
-    
+    public User() { }
     public User(string email, string userName, string password)
         {
             this.email = email;
