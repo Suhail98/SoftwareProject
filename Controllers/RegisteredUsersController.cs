@@ -30,17 +30,19 @@ namespace UserPackage
             return userController;
         }
 
-        [HttpGet]
         public List<User> listAllUsers()
         {
-
-            if (Global.getCurrentSession() != null && Global.getCurrentSession().GetType() != typeof(AdminstratorController))   return null;
-
             List<User> clientUsers = new List<User>();
             for (int i = 0; i < listUserRepos.Length; i++)
                 clientUsers.AddRange(listUserRepos[i].listUsers());
             return clientUsers;
 
+        }
+        [HttpGet]
+        public List<User> proxyListAllUsers(){
+            if (Global.getCurrentSession() != null && Global.getCurrentSession().GetType() != typeof(AdminstratorController))   
+                return null;
+            return listAllUsers();
         }
     }
 }
