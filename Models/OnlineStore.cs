@@ -18,7 +18,7 @@ public class OnlineStore : Store
     // Attributes
 
 
-        public OnlineStore(string storeName, string storeAddress,StoreOwner owner):base(storeName,storeAddress,owner)
+        public OnlineStore(string storeName, string storeAddress,StoreOwnerController owner):base(storeName,storeAddress,owner)
         {
             
         }

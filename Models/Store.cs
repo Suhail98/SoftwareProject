@@ -18,11 +18,11 @@ public class Store
     // Attributes
 
 
-    private StoreOwner storeOwner;
+    private StoreOwnerController storeOwner;
         private string storeName;
         private string storeAddress;
 
-        public Store(string storeName, string storeAddress, StoreOwner storeOwner)
+        public Store(string storeName, string storeAddress, StoreOwnerController storeOwner)
         {
             this.storeName = storeName;
             this.storeAddress = storeAddress;
@@ -36,7 +36,7 @@ public class Store
         {
             return storeAddress;
         }
-        public StoreOwner getStoreOwner()
+        public StoreOwnerController getStoreOwner()
         {
             return storeOwner;
         }
@@ -48,7 +48,7 @@ public class Store
         {
             this.storeAddress = storeAddress;
         }
-        public void setStoreOwner(StoreOwner storeOwner)
+        public void setStoreOwner(StoreOwnerController storeOwner)
         {
             this.storeOwner = storeOwner;
         }

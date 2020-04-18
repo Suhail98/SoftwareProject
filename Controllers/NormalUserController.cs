@@ -43,7 +43,14 @@ public class NormalUserController : UserController
         {
             return normalUser;
         }
-
+        public override string getEmail()
+        {
+            return normalUser.getEmail();
+        }
+        public override string getUserName()
+        {
+            return normalUser.getUserName();
+        }
     } /* end class NormalUserController */
 
 }

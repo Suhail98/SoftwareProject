@@ -37,6 +37,14 @@ namespace UserPackage
         {
             return admin;
         }
+        public override string getEmail()
+        {
+            return admin.getEmail();
+        }
+        public override string getUserName()
+        {
+            return admin.getUserName();
+        }
     } /* end class AdminstratorController */
 
 }

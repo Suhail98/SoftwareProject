@@ -21,7 +21,7 @@ public class StoreOwner : User
 
         // Attributes
 
-        public List<Store> stores = new List<Store>();
+        public List<StoreController> stores = new List<StoreController>();
 
         public StoreOwner()
         {
@@ -31,7 +31,11 @@ public class StoreOwner : User
         {
           //  stores = new List<Store>();
         }
-        public void addStore(Store store)
+        public StoreOwner(string email, string userName, string password, List<StoreController>stores) : base(email, userName, password)
+        {
+            this.stores = stores;
+        }
+        public void addStore(StoreController store)
         {
 
         }

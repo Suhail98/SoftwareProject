@@ -13,7 +13,7 @@ namespace UserPackage {
 
     public class AdminstratorDataBase : IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo, IListUserRepo,ISearchUserRepo
 {
-        static private SqlConnection conn = new SqlConnection("Data Source=sql5053.site4now.net;Initial Catalog=DB_A5A92A_SWEDB;Persist Security Info=True;User ID=DB_A5A92A_SWEDB_admin;Password=aaas2020");
+        static private SqlConnection conn = new SqlConnection("Data Source=sql5053.site4now.net;Initial Catalog=DB_A5A92A_SWEDB;Persist Security Info=True;User ID=DB_A5A92A_SWEDB_admin;Password=aaas2020;MultipleActiveResultSets=True");
         public void addUser(User user)
         {
 
@@ -62,7 +62,8 @@ namespace UserPackage {
 
         public List<User> listUsers()
         {
-            return new List<User>(AdminUser);
+            //  return new List<User>(AdminUser);
+            return null;
         }
 
         

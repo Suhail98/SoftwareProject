@@ -163,7 +163,9 @@
     <Compile Include="Controllers\IListAllUsers.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NormalUserController.cs" />
+    <Compile Include="Controllers\OnlineStoreController.cs" />
     <Compile Include="Controllers\OnSiteStoreController.cs" />
+    <Compile Include="Controllers\RegisteredStoresController.cs" />
     <Compile Include="Controllers\RegisteredUsersController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\StoreOwnerController.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Models\IListUserRepo.cs" />
     <Compile Include="Models\IAddUserRepo.cs" />
     <Compile Include="Models\IAddStoreRepo.cs" />
+    <Compile Include="Models\IListOwnerStores.cs" />
     <Compile Include="Models\ISearchStoreRepo.cs" />
     <Compile Include="Models\ISearchUserRepo.cs" />
     <Compile Include="Models\IUpdateStoreRepo.cs" />

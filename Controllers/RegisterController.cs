@@ -47,12 +47,12 @@ public class RegisterController: ApiController, IRegister
             if (user != null)
                 return null;
 
-            Store store = onlineStoreSearcher.searchStoreByName(storeName);
+            OnlineStoreController store = (OnlineStoreController)onlineStoreSearcher.searchStoreByName(storeName);
             if (store != null)
                 return null;
 
             StoreOwnerController storeOwnerUser = new StoreOwnerController(email, userName, password);
-            OnlineStore onlineStore = new OnlineStore(storeName, storeURL, storeOwnerUser.getStoreOwner());
+            OnlineStoreController onlineStore = new OnlineStoreController(storeName, storeURL, storeOwnerUser);
             onlineStoreAdder.addStore(onlineStore);
             storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());
             return storeOwnerUser;
@@ -65,12 +65,12 @@ public class RegisterController: ApiController, IRegister
             if (user != null)
                 return null;
 
-            Store store = onsiteStoreSearcher.searchStoreByName(storeName);
+            OnSiteStoreController store = (OnSiteStoreController)onsiteStoreSearcher.searchStoreByName(storeName);
             if (store != null)
                 return null;
 
             StoreOwnerController storeOwnerUser = new StoreOwnerController(email, userName, password);
-            OnSiteStore onSiteStore = new OnSiteStore(storeName, storeAddress, storeOwnerUser.getStoreOwner());
+            OnSiteStoreController onSiteStore = new OnSiteStoreController(storeName, storeAddress, storeOwnerUser);
             onsiteStoreAdder.addStore(onSiteStore);
 
             storeOwnerRepo.addUser(storeOwnerUser.getStoreOwner());

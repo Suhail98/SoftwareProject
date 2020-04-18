@@ -19,7 +19,7 @@ public class OnSiteStore : Store
 
   
 
-        public OnSiteStore(string storeName, string storeAddress,StoreOwner owner):base(storeName,storeAddress,owner)
+        public OnSiteStore(string storeName, string storeAddress,StoreOwnerController owner):base(storeName,storeAddress,owner)
         {
            
         }

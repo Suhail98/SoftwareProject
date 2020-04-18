@@ -14,6 +14,8 @@ namespace UserPackage {
 public abstract class UserController
 {
         public abstract string getPassword();
+        public abstract string getEmail();
+        public abstract string getUserName();
         public abstract User getModel();
     } /* end class UserController */
 

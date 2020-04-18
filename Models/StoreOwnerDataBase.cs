@@ -5,6 +5,7 @@
 // section -87--2-87--42--4267bcd9:1710d3b46a2:-8000:0000000000000976 end
 using StorePackage;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace UserPackage {
@@ -17,7 +18,7 @@ namespace UserPackage {
      /// </summary>
 public class StoreOwnerDataBase : IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo, IListUserRepo, ISearchUserRepo
     {
-        static private SqlConnection conn = new SqlConnection("Data Source=sql5053.site4now.net;Initial Catalog=DB_A5A92A_SWEDB;Persist Security Info=True;User ID=DB_A5A92A_SWEDB_admin;Password=aaas2020");
+        static private SqlConnection conn = new SqlConnection("Data Source=sql5053.site4now.net;Initial Catalog=DB_A5A92A_SWEDB;Persist Security Info=True;User ID=DB_A5A92A_SWEDB_admin;Password=aaas2020;MultipleActiveResultSets=True");
         public void addUser(User user)
         {
             conn.Open();
@@ -30,7 +31,12 @@ public class StoreOwnerDataBase : IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo
 
     public  UserController searchByEmail(string email)
     {
-            conn.Open();
+            bool wasOpen = true;
+            if (conn != null && conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+                wasOpen = false;
+            }
             string strSelect = "Select * From StoreOwner where email=@email";
             SqlCommand cmd = new SqlCommand(strSelect, conn);
             cmd.Parameters.Add("@email", email);
@@ -41,11 +47,12 @@ public class StoreOwnerDataBase : IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo
                 string Nemail = myReader["email"].ToString();
                 string userName = myReader["userName"].ToString();
                 string password = myReader["password"].ToString();
-                StoreOwnerController storeOwner = new StoreOwnerController(Nemail, userName, password);
-                conn.Close();
+                List<StoreController> stores = new RegisteredStoresController().listStoresOfOwner(email);
+                StoreOwnerController storeOwner = new StoreOwnerController(email, userName, password, stores); conn.Close();
                 return storeOwner;
             }
-            conn.Close();
+            if(!wasOpen)
+                conn.Close();
             return null;
         }
 
@@ -77,40 +84,29 @@ public class StoreOwnerDataBase : IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo
         public List<User> listUsers()
         {
             List<StoreOwner> StoreOwners = new List<StoreOwner>();
-            conn.Open();
+            bool wasOpen = true;
+            if (conn != null && conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+                wasOpen = false;
+            }
             string strSelect = "Select * From StoreOwner ";
             SqlCommand cmd = new SqlCommand(strSelect, conn);
             SqlDataReader myReader = cmd.ExecuteReader();
             while (myReader.Read())
             {
-                List<Store> Stores = new List<Store>();
+
 
                 string email = myReader["email"].ToString();
                 string userName = myReader["userName"].ToString();
                 string password = myReader["password"].ToString();
-
-                string strSelectfromStore = "Select * From StoreOwner,OnlineStore,OnSiteStore where (OnlineStore.storeOwner = StoreOwner.email or OnSiteStore.storeOwner = StoreOwner.email) and StoreOwner.email = @email  ";
-                SqlCommand cmdstore = new SqlCommand(strSelectfromStore, conn);
-                SqlDataReader myReaderstore = cmdstore.ExecuteReader();
-                while (myReaderstore.Read())
-                {
-                    if (myReaderstore["OnlineStore.storeName"].ToString() != null)
-                    {
-                        string storeName = myReader["storeName"].ToString();
-                        string storeAddress = myReader["storeAddress"].ToString();
-                    }
-                     
-                   
-
-                }
-
-
-                    StoreOwner storeOwner = new StoreOwner(email,userName,password);
+                List<StoreController> stores = new RegisteredStoresController().listStoresOfOwner(email);
+                StoreOwner storeOwner = new StoreOwner(email,userName,password,stores);
                 StoreOwners.Add(storeOwner);
-
             }
             myReader.Close();
-            conn.Close();
+            if(!wasOpen)
+                conn.Close();
             return new List<User>(StoreOwners);
         }
     } 

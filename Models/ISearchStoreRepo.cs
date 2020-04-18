@@ -8,6 +8,6 @@ namespace StorePackage
 {
     interface ISearchStoreRepo
     {
-        Store searchStoreByName(string storeName);
+        StoreController searchStoreByName(string storeName);
     }
 }

@@ -8,6 +8,6 @@ namespace StorePackage
 {
     interface IAddStoreRepo
     {
-        void addStore(Store store);
+        void addStore(StoreController store);
     }
 }

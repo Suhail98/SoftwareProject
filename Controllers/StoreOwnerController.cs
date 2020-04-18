@@ -5,6 +5,7 @@
 // section -87--2-87--42--4267bcd9:1710d3b46a2:-8000:0000000000000965 end
 using StorePackage;
 using System;
+using System.Collections.Generic;
 
 namespace UserPackage
 {
@@ -31,6 +32,10 @@ namespace UserPackage
         {
             storeOwner = new StoreOwner(email, userName, password);
         }
+        public StoreOwnerController(string email, string userName, string password,List<StoreController>stores)
+        {
+            storeOwner = new StoreOwner(email, userName, password,stores);
+        }
 
         public override string getPassword()
         {
@@ -46,9 +51,17 @@ namespace UserPackage
             return storeOwner;
         }
 
-        public void addStore(Store store)
+        public void addStore(StoreController store)
         {
             storeOwner.addStore(store);
+        }
+        public override string getEmail()
+        {
+            return storeOwner.getEmail();
+        }
+        public override string getUserName()
+        {
+            return storeOwner.getUserName();
         }
     } /* end class StoreOwnerController */
 
