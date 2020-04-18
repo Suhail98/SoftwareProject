@@ -89,7 +89,7 @@ public class StoreOwnerDataBase : IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo
                 string userName = myReader["userName"].ToString();
                 string password = myReader["password"].ToString();
 
-                string strSelectfromStore = "Select * From StoreOwner,OnlineStore,OnSiteStore where (OnlineStore.storeOwner = StoreOwner.email or OnSiteStore.storeOwner = StoreOwner.email) and StoreOwner.email = @email  ";
+                /*string strSelectfromStore = "Select * From StoreOwner,OnlineStore,OnSiteStore where (OnlineStore.storeOwner = StoreOwner.email or OnSiteStore.storeOwner = StoreOwner.email) and StoreOwner.email = @email  ";
                 SqlCommand cmdstore = new SqlCommand(strSelectfromStore, conn);
                 SqlDataReader myReaderstore = cmdstore.ExecuteReader();
                 while (myReaderstore.Read())
@@ -102,7 +102,7 @@ public class StoreOwnerDataBase : IAddUserRepo, IUpdateUserRepo, IDeleteUserRepo
                      
                    
 
-                }
+                }*/
 
 
                     StoreOwner storeOwner = new StoreOwner(email,userName,password);

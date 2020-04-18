@@ -16,8 +16,7 @@ namespace UserPackage
         private IListUserRepo[] listUserRepos = new IListUserRepo[] { new NormalUserDataBase(), new StoreOwnerDataBase() };
 
 
-        private ISearchUserRepo[] searchUserRepos = new ISearchUserRepo[]{ new AdminstratorDataBase(), new NormalUserDataBase(), new StoreOwnerDataBase() };
-        private IListUserRepo[] listUserRepos = new IListUserRepo[] {new NormalUserDataBase(), new StoreOwnerDataBase() };
+       
         
         public UserController findUser(string email)
         {

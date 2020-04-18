@@ -62,7 +62,7 @@ namespace UserPackage {
 
         public List<User> listUsers()
         {
-            return new List<User>(AdminUser);
+            return null;
         }
 
         
